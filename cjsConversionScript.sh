@@ -1,5 +1,5 @@
 
-MIGRATIONS_DIR="migrations"
+MIGRATIONS_DIR="src/migrations"
 
 # Check if the migrations directory exists
 if [ ! -d "$MIGRATIONS_DIR" ]; then

@@ -1,65 +1,44 @@
-import { DataTypes } from 'sequelize';
-import BaseModel from './BaseModel';
-import ModelConstants from "./constants.js";
+import { Sequelize, DataTypes } from 'sequelize';
+import { sequelize } from '../db/connection.js';
 
-class Users extends BaseModel {
-    static initialize(sequelize) {
-        super.initialize(sequelize);
-        this.init(
-            {
-                id: {
-                    type: DataTypes.UUID,
-                    defaultValue: DataTypes.UUIDV4,
-                    primaryKey: true,
-                },
+export const Users = sequelize.define('Users', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+    },
 
-                role: {
-                    type: DataTypes.ENUM(ModelConstants.User, ModelConstants.Organizer, ModelConstants.Administrator),
-                    allowNull: false,
-                    defaultValue: ModelConstants.User
-                },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW, // Correct usage of DataTypes.NOW
+    },
 
-                firstName: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW, // Correct usage of DataTypes.NOW
+    },
 
-                lastName: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
+    firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 
-                email: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                    unique: true,
-                },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 
-                phone: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                    unique: true,
-                },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
 
-                password: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
-
-                is_deleted : {
-                    type : DataTypes.BOOLEAN,
-                    allowNull: false,
-                    default:false
-                }
-            },
-            {
-                sequelize,
-                modelName: 'Users',
-                tableName: 'Users',
-            }
-        );
-    }
-}
-
+    is_deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },
+});
 
 export default Users;

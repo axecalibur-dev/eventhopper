@@ -25,6 +25,16 @@ services:
     env_file:
       - ./.env
 
+  nginx-container:
+    container_name: nginx-container
+    image: nginx
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - eventhopper
+
   mongo-container:
     container_name: mongo-container
     image: mongo

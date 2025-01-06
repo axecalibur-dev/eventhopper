@@ -1,0 +1,1 @@
+docker exec -it server sh -c "npx sequelize-cli db:migrate"

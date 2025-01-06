@@ -33,19 +33,19 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      address_level_one: {
+      streetname: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      address_level_two: {
+      locality: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      address_level_three: {
+      city: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      address_level_four: {
+      state: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -63,7 +63,7 @@ module.exports = {
       },
       organizing_poc: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       eventShortDescription: {
         type: Sequelize.STRING,
@@ -75,11 +75,11 @@ module.exports = {
       },
       eventHeroImage: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       eventProfileImage: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       pricePerUnit: {
         type: Sequelize.FLOAT,

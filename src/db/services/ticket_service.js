@@ -3,6 +3,8 @@ import crypto from "crypto";
 import Tickets from "../../models/tickets.js";
 import Users from "../../models/users.js";
 import Events from "../../models/events.js";
+import { sequelize } from "../connection.js";
+import { Sequelize, DataTypes, Transaction } from "sequelize";
 
 class TicketService {
   generate_ticket_code = async (eventName) => {
@@ -15,11 +17,54 @@ class TicketService {
   };
 
   create_new_ticket = async (user_id, event_id, eventName) => {
-    return await Tickets.create({
-      ticket_code: await this.generate_ticket_code(eventName),
-      user: user_id,
-      event: event_id,
-    });
+    const transaction = await sequelize.transaction();
+    try {
+      const event = await Events.findOne({
+        where: { id: event_id },
+        lock: Transaction.LOCK.UPDATE,
+        transaction,
+      });
+
+      if (!event) {
+        await transaction.rollback();
+        return {
+          message: "No ticket was found for this event id.",
+          status: 404,
+          data: null,
+        };
+      }
+
+      if (event.ticketsAvailable <= 0) {
+        await transaction.rollback();
+        return {
+          message: "Tickets were sold out.",
+          status: 200,
+          data: null,
+        };
+      }
+
+      event.ticketsAvailable -= 1;
+      await event.save({ transaction });
+
+      const newTicket = await Tickets.create(
+        {
+          event: event.id,
+          user: user_id,
+          ticket_code: await this.generate_ticket_code(eventName),
+        },
+        { transaction },
+      );
+
+      await transaction.commit();
+      return {
+        message: "Tickets were bought.",
+        status: 201,
+        data: newTicket,
+      };
+    } catch (error) {
+      await transaction.rollback();
+      return [error.message, 201];
+    }
   };
 
   get_ticket = async (ticket_id) => {

@@ -15,13 +15,13 @@ class TicketController extends BaseController {
         req.body.event_id,
         req.body.eventName,
       );
-      if (!event) {
-        return this.handleError(res, "Ticket purchase failed.", 404);
+      if (event.data === null) {
+        return this.handleError(res, event.message, event.status);
       }
-      return this.handleSuccess(res, "Ticket purchase ok.", event, 200);
+      return this.handleSuccess(res, event.message, event.data, event.status);
     } catch (error) {
       console.log(error);
-      return this.handleError(res, "Error retrieving ticket.");
+      return this.handleError(res, "Error generating a ticket.");
     }
   };
 

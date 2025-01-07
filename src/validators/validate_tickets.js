@@ -1,8 +1,8 @@
 import Joi from "joi";
 
 const ticketSchema = Joi.object({
-  user: Joi.string().uuid().required(),
-  event: Joi.string().uuid().required(),
+  user_id: Joi.string().uuid().required(),
+  event_id: Joi.string().uuid().required(),
   eventName: Joi.string().required(),
 });
 

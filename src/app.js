@@ -1,7 +1,7 @@
-import express from "express";
 import dotenv from "dotenv";
-import { connect_to_databases } from "./db/connection.js";
 dotenv.config();
+import express from "express";
+import { connect_to_databases } from "./db/connection.js";
 import userRoutes from "./routes/user_routes.js";
 import eventRoutes from "./routes/event_routes.js";
 import ticketRoutes from "./routes/ticket_routes.js";
@@ -20,9 +20,9 @@ app.use(error_handler);
 const start_server = async () => {
   try {
     await connect_to_databases();
-    setUpAssociations();
+    await setUpAssociations();
     app.listen(port, () =>
-      console.log(`Server running at http://localhost:${port}`),
+      console.log(`EventHopper is running at port: ${port}`),
     );
   } catch (error) {
     console.error("Error starting server:", error);

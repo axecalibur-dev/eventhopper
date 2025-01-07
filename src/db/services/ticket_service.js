@@ -44,6 +44,7 @@ class TicketService {
       }
 
       event.ticketsAvailable -= 1;
+      event.ticketsSold += 1;
       await event.save({ transaction });
 
       const newTicket = await Tickets.create(

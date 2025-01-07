@@ -2,7 +2,7 @@ import Tickets from "./tickets.js";
 import Events from "./events.js";
 import Users from "./users.js";
 
-const setUpAssociations = () => {
+const setUpAssociations = async () => {
   Users.hasMany(Tickets, {
     foreignKey: "user",
     as: "userTickets",

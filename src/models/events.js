@@ -40,7 +40,7 @@ export const Events = sequelize.define(
     ticketsAvailable: { type: DataTypes.NUMBER, allowNull: false },
     ticketsSold: {
       type: DataTypes.INTEGER,
-      defaultValue: 0, // Initially, no tickets sold
+      defaultValue: 0,
       allowNull: false,
     },
     is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },

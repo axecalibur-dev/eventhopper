@@ -28,7 +28,7 @@ class TicketService {
       if (!event) {
         await transaction.rollback();
         return {
-          message: "No ticket was found for this event id.",
+          message: "Event not found.",
           status: 404,
           data: null,
         };
@@ -37,8 +37,8 @@ class TicketService {
       if (event.ticketsAvailable <= 0) {
         await transaction.rollback();
         return {
-          message: "Tickets were sold out.",
-          status: 200,
+          message: "Tickets are sold out.",
+          status: 409,
           data: null,
         };
       }
@@ -57,13 +57,18 @@ class TicketService {
 
       await transaction.commit();
       return {
-        message: "Tickets were bought.",
+        message: "Ticket purchased successfully.",
         status: 201,
         data: newTicket,
       };
     } catch (error) {
       await transaction.rollback();
-      return [error.message, 201];
+      console.error("Error in ticket creation:", error);
+      return {
+        message: "An error occurred during ticket purchase.",
+        status: 500,
+        data: error.message,
+      };
     }
   };
 

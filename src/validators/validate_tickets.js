@@ -3,7 +3,6 @@ import Joi from "joi";
 const ticketSchema = Joi.object({
   user_id: Joi.string().uuid().required(),
   event_id: Joi.string().uuid().required(),
-  eventName: Joi.string().required(),
 });
 
 const validateTicket = (req, res, next) => {

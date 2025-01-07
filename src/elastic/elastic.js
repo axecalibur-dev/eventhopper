@@ -31,12 +31,12 @@ class ElasticLogstash {
       const result = await ES.index({
         index: "events",
         document: {
+          event_id: eventSingleObject.event_id,
           eventName: eventSingleObject.eventName,
           eventStartDate: eventSingleObject.eventStartDate,
           eventEndDate: eventSingleObject.eventEndDate,
           city: eventSingleObject.city,
           state: eventSingleObject.state,
-          ticketsAvailable: eventSingleObject.ticketsAvailable,
         },
       });
 
@@ -59,12 +59,12 @@ class ElasticLogstash {
       });
 
       return body.hits.hits.map((hit) => ({
+        event_id: hit._source.event_id || "N/A",
         eventName: hit._source.eventName || "N/A",
         eventStartDate: hit._source.eventStartDate || "N/A",
         eventEndDate: hit._source.eventEndDate || "N/A",
         city: hit._source.city || "N/A",
         state: hit._source.state || "N/A",
-        ticketsAvailable: hit._source.ticketsAvailable || "N/A",
       }));
     } catch (error) {
       console.error("Error querying Elasticsearch:", error);

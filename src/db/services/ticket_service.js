@@ -16,7 +16,7 @@ class TicketService {
     return `TCKT-${eventPrefix}-${hashedValue.slice(0, 8)}`;
   };
 
-  create_new_ticket = async (user_id, event_id, eventName) => {
+  create_new_ticket = async (user_id, event_id) => {
     const transaction = await sequelize.transaction();
     try {
       const event = await Events.findOne({
@@ -51,7 +51,7 @@ class TicketService {
         {
           event: event.id,
           user: user_id,
-          ticket_code: await this.generate_ticket_code(eventName),
+          ticket_code: await this.generate_ticket_code(event.eventName),
         },
         { transaction },
       );

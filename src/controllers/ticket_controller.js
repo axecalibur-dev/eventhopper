@@ -13,7 +13,6 @@ class TicketController extends BaseController {
       const event = await this.ticketService.create_new_ticket(
         req.body.user_id,
         req.body.event_id,
-        req.body.eventName,
       );
       if (event.data === null) {
         return this.handleError(res, event.message, event.status);

@@ -6,7 +6,12 @@ import Events from "../models/events.js";
 const ES = new Client({
   node: `http://${process.env.ES_HOST}:${process.env.ES_PORT}`,
 });
-
+// class ElasticError extends Error {
+//   constructor(message) {
+//     super(message);
+//     this.name = "ElasticError";
+//   }
+// }
 class ElasticLogstash {
   insert_into_elastic = async (obj) => {
     const eventSingleObject = obj[0];

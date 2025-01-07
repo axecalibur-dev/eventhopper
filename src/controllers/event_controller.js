@@ -19,12 +19,13 @@ class EventController extends BaseController {
 
       if (!currentEvent) {
         const event = await this.eventService.publish_new_event(req.body);
-        return this.handleSuccess(res, "Event has been published.", event);
+        return this.handleSuccess(res, "Event has been published.", event, 201);
       } else {
         return this.handleSuccess(
           res,
           "Event with these details already exists.",
           null,
+          200,
         );
       }
     } catch (error) {
@@ -42,8 +43,9 @@ class EventController extends BaseController {
           404,
         );
       }
-      return this.handleSuccess(res, "Event details found.", event);
+      return this.handleSuccess(res, "Event details found.", event, 200);
     } catch (error) {
+      console.log(error);
       return this.handleError(res, "Error retrieving event.");
     }
   };
@@ -51,8 +53,14 @@ class EventController extends BaseController {
   getAllEvents = async (req, res) => {
     try {
       const events = await this.eventService.get_all_published_active_events();
-      return this.handleSuccess(res, "Active and published events.", events);
+      return this.handleSuccess(
+        res,
+        "Active and published events.",
+        events,
+        200,
+      );
     } catch (error) {
+      console.log(error);
       return this.handleError(res, "Error retrieving events.");
     }
   };

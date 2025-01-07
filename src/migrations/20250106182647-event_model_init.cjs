@@ -89,6 +89,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      ticketsSold: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
       is_deleted: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

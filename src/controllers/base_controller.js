@@ -1,6 +1,6 @@
 class BaseController {
-  handleSuccess(res, message, data = {}) {
-    return res.status(200).send({
+  handleSuccess(res, message, data = {}, statusCode = 200) {
+    return res.status(statusCode).send({
       message,
       data,
     });

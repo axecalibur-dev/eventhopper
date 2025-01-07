@@ -3,7 +3,7 @@ import { parse } from "date-fns";
 
 class EventServices {
   publish_new_event = async (event_object) => {
-    return Events.create({
+    const event = await Events.create({
       eventName: event_object.eventName,
       eventType: event_object.eventType,
       eventStartDate: parse(
@@ -16,7 +16,7 @@ class EventServices {
       locality: event_object.locality,
       city: event_object.city,
       state: event_object.state,
-      address_full_string: `${event_object.streetname},${event_object.locality},${event_object.locality},${event_object.state}`,
+      address_full_string: `${event_object.streetname},${event_object.locality},${event_object.city},${event_object.state}`,
       organizing_entity: event_object.organizing_entity,
       organizing_secondary_contact_email:
         event_object.organizing_secondary_contact_email || null,
@@ -28,6 +28,8 @@ class EventServices {
       pricePerUnit: event_object.pricePerUnit,
       ticketsAvailable: event_object.ticketsAvailable,
     });
+
+    return event;
   };
 
   get_all_published_active_events = async () => {

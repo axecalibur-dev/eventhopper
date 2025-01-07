@@ -17,13 +17,19 @@ class UserController extends BaseController {
           res,
           "User with this email already exists.",
           null,
+          200,
         );
       }
 
       const newUser = await this.userService.create_new_user(req.body);
-      return this.handleSuccess(res, "A user has been created.", {
-        id: newUser.id,
-      });
+      return this.handleSuccess(
+        res,
+        "A user has been created.",
+        {
+          id: newUser.id,
+        },
+        201,
+      );
     } catch (error) {
       return this.handleError(res, "Error creating user.");
     }

@@ -1,9 +1,9 @@
 import express from "express";
 import validateUser from "../validators/validate_user.js";
-import userController from "../controllers/user_controller.js";
+import ticketController from "../controllers/ticket_controller.js";
 
 const router = express.Router();
 
-router.post("/new", validateUser, await userController.createUser);
+router.post("/purchase", await ticketController.generate_new_ticket);
 
 export default router;

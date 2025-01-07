@@ -4,6 +4,7 @@ import { connect_to_databases } from "./db/connection.js";
 dotenv.config();
 import userRoutes from "./routes/user_routes.js";
 import eventRoutes from "./routes/event_routes.js";
+import ticketRoutes from "./routes/ticket_routes.js";
 import error_handler from "./handler/error_handler.js";
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRoutes);
 app.use("/events", eventRoutes);
+app.use("/ticket", ticketRoutes);
 app.use(error_handler);
 const start_server = async () => {
   try {

@@ -6,6 +6,7 @@ import userRoutes from "./routes/user_routes.js";
 import eventRoutes from "./routes/event_routes.js";
 import ticketRoutes from "./routes/ticket_routes.js";
 import error_handler from "./handler/error_handler.js";
+import setUpAssociations from "./models/associations.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use(error_handler);
 const start_server = async () => {
   try {
     await connect_to_databases();
+    setUpAssociations();
     app.listen(port, () =>
       console.log(`Server running at http://localhost:${port}`),
     );

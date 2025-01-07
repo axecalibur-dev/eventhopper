@@ -1,6 +1,6 @@
 import BaseController from "./base_controller.js";
 import TicketService from "../db/services/ticket_service.js";
-import Events from "../models/events.js";
+import Tickets from "../models/tickets.js";
 
 class TicketController extends BaseController {
   constructor() {
@@ -19,6 +19,21 @@ class TicketController extends BaseController {
         return this.handleError(res, "Ticket purchase failed.", 404);
       }
       return this.handleSuccess(res, "Ticket purchase ok.", event, 200);
+    } catch (error) {
+      console.log(error);
+      return this.handleError(res, "Error retrieving ticket.");
+    }
+  };
+
+  get_ticket_details = async (req, res) => {
+    try {
+      const ticket = await this.ticketService.get_ticket(
+        req.params["ticket_id"],
+      );
+      if (!ticket) {
+        return this.handleError(res, "Ticket details not found.", 404);
+      }
+      return this.handleSuccess(res, "Ticket found ok.", ticket, 200);
     } catch (error) {
       console.log(error);
       return this.handleError(res, "Error retrieving ticket.");

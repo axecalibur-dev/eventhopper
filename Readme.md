@@ -183,15 +183,28 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
 
 ---
 
-## System Architecture
+# System Architecture
 
-### Database Structure
-- **PostgreSQL**: Stores structured data such as users, events, and tickets.
-- **Redis**: As a message queue.
-- **MongoDB**: Logs operational activities, including task schedules for workers, it's current states, parameters, job IDs, queues, and arguments for transparency and debugging.
-### Search Functionality
-- Elasticsearch indexes events for fast and efficient searching.
-- Redis and message queues ensure asynchronous task execution for indexing.
+The application employs a well-thought-out combination of components to ensure scalability, performance, and maintainability:
 
-### Task Management
-- Worker threads process background tasks like pushing data to Elasticsearch to avoid blocking the main thread.
+## Key Components
+
+### 1. **Node.js & Express.js**
+- **Node.js** provides a non-blocking, single-threaded runtime environment, ideal for high-performance applications.
+- **Express.js** offers a lightweight, battle-tested framework for building RESTful APIs. Its simplicity, compatibility with ORMs/ODMs, and widespread adoption make it an excellent choice.
+
+### 2. **PostgreSQL & MongoDB**
+- **PostgreSQL**: Chosen as the primary database for its structured schema support and superior handling of joins, which are critical for tables like users, tickets, and events.
+- **MongoDB**: Serves as a secondary database for logging of async tasks due to its flexibility, ability to handle diverse data types, and support for high-throughput operations.
+
+### 3. **Redis as Message Queue**
+Redis ensures high availability and performance for asynchronous task execution. Tasks like updating ElasticSearch are handled by workers via Redis queues, keeping the main thread unblocked and enhancing user experience.
+
+### 4. **ElasticSearch for Search**
+ElasticSearch enables fast, efficient searches through reverse indexing, offering scalability and future-proofing for high data volumes.
+
+### 5. **Nginx as Reverse Proxy**
+Nginx handles traffic routing efficiently, serving as the entry point to the application.
+
+### 6. **Docker for Deployment**
+Docker and Docker Compose streamline setup and deployment, ensuring consistency across environments. Volume mounts and bind mounts maintain data persistence, even during container restarts.

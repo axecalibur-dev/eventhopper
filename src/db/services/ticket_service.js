@@ -86,7 +86,15 @@ class TicketService {
           model: Events,
           foreignKey: "event",
           as: "eventData",
-          attributes: ["id", "eventName", "eventStartDate", "eventEndDate"],
+          attributes: [
+            "id",
+            "eventName",
+            "eventStartDate",
+            "eventEndDate",
+            "address_full_string",
+            "organizing_poc",
+            "pricePerUnit",
+          ],
         },
       ],
     });

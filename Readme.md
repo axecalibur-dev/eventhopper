@@ -34,7 +34,7 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
 ## How to Set Up
 
 1. **Navigate to the Project Root**:
-    - After ensuring the pre-requisites are met, locate the bash script `start_dev.sh` in the project root.
+    - After ensuring the pre-requisites are met, locate the bash script `start_dev.sh` in the project root and execute it with `sudo sh start_dev.sh` for mac based systems, for linux based replace sh with bash. The file is already an executable so chmod won't be required.
     - This bash script is preconfigured to execute terminal commands and initialize Docker Compose to start pulling relevant containers from the registry.
 
 2. **Docker Compose Process**:

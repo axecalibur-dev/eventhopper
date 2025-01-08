@@ -66,7 +66,7 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
 **www.example.com**
 
 
-1. The application used Express JS to run a restful server while using postgres as primary database and mongodb as secondary database.
+1. The application uses Express JS to run a restful server while using postgres as primary database and mongodb as secondary database.
 2. The applications exposes three types of routes ( endpoints ):
    - **2A**: Users ( for services related to user such as creating a new user. ) | /users
    - **2B**: Events ( for services related to events such as publishing a new event, search, get details of one particular event using it's id, list down all events currently active on the platform. ) /events
@@ -79,7 +79,7 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
         - "firstName" of type String ( Min : 3 / Max : 20)
         - "lastName" of type String ( Min : 3 / Max : 20)
         - "email" of type String(email) ( Min : 3 / Max : 20)
-      - Respose : 
+      - Response : 
         - Returns a message object with an appropriate message and a data property of JSON type which contains the id : UUID
       - Validation : JOI is used to body validation and returns an appropriate message if any of body params is missing or if present is corrupt/validate.
 4. Events ( /events )
@@ -101,7 +101,7 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
          - "eventProfileImage" of type String ( Min : 3 / Max : 20)
          - "pricePerUnit" of type String ( Min : 3 / Max : 20)
          - "ticketsAvailable" of type String(email) ( Min : 3 / Max : 20)
-      - Respose :
+      - Response :
          - Returns a message object with an appropriate message and a data property of JSON type which contains the id : UUID
       - Validation : JOI is used to body validation and returns an appropriate message if any of body params is missing or if present is corrupt/validate.
 
@@ -109,27 +109,35 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
        - Request Type : GET
        - Payload ( query params ) :
            - id of the event.
-       - Respose :
+       - Response :
            - Returns a message object with an appropriate message and a data property of JSON type which contains the details of the events. If not found returns 404
    -  /events/get_events
        - Request Type : GET
-       - Respose :
+       - Response :
            - Returns a message object with an appropriate message and a data property of JSON type which contains a list of all published events.
    -  /events/search/
        - Request Type : GET
        - Payload :
            - "eventName" of type String ( Min : 3 / Max : 20)
-       - Respose :
+       - Response :
            - Returns a message object with an appropriate message and a data property of JSON type, does this by search the event in elastic and returns information about the event.
-4. Report ( /report/:event_id )
-    -  /users/new
+5. Report ( /report )
+    -   /report/generate/:event_id
         - Request Type : GET
         - Payload ( query params ) :
             - "id" of type UUID of the event.  
-        - Respose :
+        - Response :
             - Returns a message object with an appropriate message and a data property of JSON type which contains the a breakup of the revenue generated and number of tickets available and number sold.
 
-
+6. Ticketing ( /ticket )
+    -   /ticket/purchase 
+        - Request Type : POST
+        - Payload :
+            - "event_id" of type UUID of the event.
+            - "user_id" of type UUID of the user.
+        - Response :
+            - Returns a message object with an appropriate message and a data property of JSON type which contains an approproate message telling if the 
+                purchase is success or not or if the tickets are already sold.
 
 ## How does it work ?
 
@@ -157,7 +165,7 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
             - `endTime`
             - `ticketsAvailable`
             - `ticketPrice` and more described above.
-    - `/events/get_event/:id`:
+    - `/events/get_event/:event_id`:
         - **Method**: `GET`
         - **Description**: Retrieves event details by ID.
     - `/events/get_events`:
@@ -170,14 +178,14 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
         - **Method**: `POST`
         - **Description**: Purchases tickets for an event.
         - **Body Parameters**:
-            - `userId`
-            - `eventId`
-    - `/tickets/:id`:
+            - `user_id`
+            - `event_id`
+    - `/tickets/:ticket_id`:
         - **Method**: `GET`
         - **Description**: Verifies ticket details by ID.
 
 ### 4. Event Reports
-- **Endpoint**: `/reports`
+- **Endpoint**: `/reports/generate/:event_id`
 - **Method**: `GET`
 - **Description**: Generates a brief report of an event, including tickets sold and revenue generated.
 

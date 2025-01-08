@@ -62,12 +62,9 @@ Welcome to **EventHopper** – your go-to place for discovering exciting events,
 
 ## API Documentation
 
-**APIS can be found at:**
-**www.example.com**
-
 
 1. The application uses Express JS to run a restful server while using postgres as primary database and mongodb as secondary database.
-2. The applications exposes three types of routes ( endpoints ):
+2. The applications exposes four types of routes ( endpoints ):
    - **2A**: Users ( for services related to user such as creating a new user. ) | /users
    - **2B**: Events ( for services related to events such as publishing a new event, search, get details of one particular event using it's id, list down all events currently active on the platform. ) /events
    - **2C**: Tickets ( for services related to ticketing and purchasing. ) /tickets
@@ -205,7 +202,7 @@ The application employs a well-thought-out combination of components to ensure s
 - **PostgreSQL**: Chosen as the primary database for its structured schema support and superior handling of joins, which are critical for tables like users, tickets, and events.
 - **MongoDB**: Serves as a secondary database for logging of async tasks due to its flexibility, ability to handle diverse data types, and support for high-throughput operations.
 
-### 3. **Redis as Message Queue**
+### 3. **Redis as a Message Queue**
 Redis ensures high availability and performance for asynchronous task execution. Tasks like updating ElasticSearch are handled by workers via Redis queues, keeping the main thread unblocked and enhancing user experience.
 
 ### 4. **ElasticSearch for Search**
@@ -214,5 +211,5 @@ ElasticSearch enables fast, efficient searches through reverse indexing, offerin
 ### 5. **Nginx as Reverse Proxy**
 Nginx handles traffic routing efficiently, serving as the entry point to the application.
 
-### 6. **Docker for Deployment**
+### 6. **Docker for wrapping everything in a container**
 Docker and Docker Compose streamline setup and deployment, ensuring consistency across environments. Volume mounts and bind mounts maintain data persistence, even during container restarts.
